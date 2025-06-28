@@ -6,7 +6,7 @@ def main():
     epd = epd2in13_V4.EPD()
     epd.init() # wakes the screen - this will turn it black
     epd.Clear() #clears the screen to white
-    time.sleep(2)
+    time.sleep(3)
 
     w = epd.width
     h = epd.height
@@ -20,7 +20,7 @@ def main():
     image = image.rotate(90, expand=True)  # landscape mode
     buffer = epd.getbuffer(image)           # convert to raw display format that ePaper display understands
     epd.display(buffer)                     # send to screen to show it
-    time.sleep(2)                           # pauses execution for 2 seconds so display has time to update
+    time.sleep(3)                           # pauses execution for 2 seconds so display has time to update
 
     # Then black
     image = Image.new('1', (h,w),0)         # black image
@@ -29,13 +29,13 @@ def main():
     image = image.rotate(90, expand=True)  # landscape mode
     buffer = epd.getbuffer(image)           # convert to raw display format
     epd.display(buffer)                     # send to screen
-    time.sleep(2)                           # pauses execution for 1 second
+    time.sleep(3)                           # pauses execution for 1 second
 
     # Wipe with white again
     image = Image.new('1', (w,h),255)       # create a white image
     buffer = epd.getbuffer(image)           # convert to raw display format that ePaper display understands
     epd.display(buffer)                     # send to screen to show it
-    time.sleep(2) 
+    time.sleep(3) 
 
     epd.sleep()                             # tells controller to shut down
 
