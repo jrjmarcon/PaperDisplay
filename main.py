@@ -12,17 +12,19 @@ def main():
     font = ImageFont.load_default()         #load a basic font for drawing the text
 
     # Wipe with white
-    image = Image.new('1', (w,h),255)       # create a white image
+    image = Image.new('1', (h,w),255)       # create a white image
     draw = ImageDraw.Draw(image)            #create a drawing context to draw on the image
     draw.text((10, 50), "Hello, world!", font=font, fill=0) # draw black text on the white screen
+    image = image.rotate(90, expand=True)  # landscape mode
     buffer = epd.getbuffer(image)           # convert to raw display format that ePaper display understands
     epd.display(buffer)                     # send to screen to show it
     time.sleep(2)                           # pauses execution for 2 seconds so display has time to update
 
     # Then black
-    image = Image.new('1', (w,h),0)         # black image
+    image = Image.new('1', (h,w),0)         # black image
     draw = ImageDraw.Draw(image)
     draw.text((10, 50), "Hello, world! (now in black!)", font=font, fill=255) # draw white text on the black screen
+    image = image.rotate(90, expand=True)  # landscape mode
     buffer = epd.getbuffer(image)           # convert to raw display format
     epd.display(buffer)                     # send to screen
     time.sleep(2)                           # pauses execution for 1 second
