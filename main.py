@@ -4,7 +4,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 def main():
     epd = epd2in13_V4.EPD()
-    epd.init() # wakes the screen
+    epd.init() # wakes the screen - this will turn it black
+    epd.Clear() #clears the screen to white
+    time.sleep(2)
 
     w = epd.width
     h = epd.height
