@@ -3,7 +3,13 @@ import requests #for making requests to the API
 from pokepython.models.pokemon_card import PokemonCard
 from dotenv import load_dotenv #for loading variables from the .env file
 
+from ratelimit import limits, sleep_and_retry # import rate limiting library
+
 load_dotenv() #load environment variables from .env file
+
+# Maximum 20,000 requests per day on free tier
+CALLS_PER_DAY = 15000 # Setting to 10000 to be safe
+SECONDS_PER_DAY = 86400 # Seconds in a day
 
 API_KEY = os.getenv("POKE_KEY")
 BASE_URL = "https://api.pokemontcg.io/v2"
@@ -15,6 +21,8 @@ HEADERS = {
 if not API_KEY:
     raise ValueError("API key not found. Please check your .env file or environment variables")
 
+@sleep_and_retry
+@limits(calls=CALLS_PER_DAY, period=SECONDS_PER_DAY)
 def get_card_info(card_id):
     url = f"{BASE_URL}/cards/{card_id}"
     response = requests.get(url, headers=HEADERS)
@@ -37,8 +45,11 @@ def get_card_info(card_id):
         if market_price is not None:
             break
 
+    print(f"[SUCCESS] Retrieved {name} | Price: ${market_price} | Card ID: {card_id}")
+
     card = PokemonCard(name=name, set_name=set_name, artist=artist, price=market_price)
     return card
+
 
 
 if __name__ == "__main__":

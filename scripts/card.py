@@ -16,24 +16,35 @@ def main():
     epd.Clear()
 
     display = Display(epd)
+    
+    update_int = 1 # update interval in minutes
 
-    try:
-        card_info = get_card_info("sv10-232")
-        if card_info is None:
-            print("Failed to fetch time from API, retrying in 10 seconds")
-            return
+    while True:
+        try:
+            card_info = get_card_info("sv10-232")
 
-        price_str = f"${card_info.price:.2f}"
+            if card_info is None:
+                print("[WARNING] Failed to fetch time from API, retrying in 10 seconds")
+                sleep(10)
+                continue # skips the rest of the loop and starts over
+            
+            price_str = f"${card_info.price:.2f}"
+            
+            print(f"[SUCCESS]Displaying updated price: {price_str}")
+            display.show_time(price_str)
 
-        print(f"Displaying price: {card_info.price}")
+            print(f"[INFO] Sleeping for {update_int} minute(s)...\n")
+            sleep(update_int * 60)
 
-        display.show_time(price_str)
+        except KeyboardInterrupt:
+            print("\n[INFO] Interrupted. Putting display to sleep...")
+            epd.Clear(0xFF)  # 0xFF = white, 0x00 = black
+            epd.sleep()
+            break
 
-
-    except KeyboardInterrupt:
-        print("Interrupted. Putting display to sleep...")
-        epd.Clear(0xFF)  # 0xFF = white, 0x00 = black
-        epd.sleep()
+        except Exception as e:
+            print(f"[ERROR] {e}. Retrying in 10 seconds...")
+            sleep(10)
 
 
 if __name__ == "__main__":

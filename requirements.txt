@@ -1,8 +1,9 @@
 Pillow
 RPi.GPIO
+gpiozero
 spidev
-EOF
-matplotlib
 datetime
 requests
 python-dotenv
+ratelimit
+lgpio
