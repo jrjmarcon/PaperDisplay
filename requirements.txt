@@ -5,3 +5,4 @@ EOF
 matplotlib
 datetime
 requests
+python-dotenv
