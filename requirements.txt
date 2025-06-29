@@ -4,3 +4,4 @@ spidev
 EOF
 matplotlib
 datetime
+requests
