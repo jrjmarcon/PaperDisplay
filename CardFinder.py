@@ -30,5 +30,5 @@ def get_card_id_by_name_and_set(card_name, set_name):
     return ids if len(ids) > 1 else ids[0]  # Return single ID if only one match
 
 # Replace with your API key and run:
-result = get_card_id_by_name_and_set("Cynthia's Garchomp ex","Destined Rivals")
+result = get_card_id_by_name_and_set("Umbreon ex","Prismatic Evolutions")
 print(result)

@@ -7,6 +7,8 @@ from services.pokemon_api import get_card_info #import the service function
 from drivers import epd2in13_V4
 from pokepython.display import Display
 
+# Cynthia's Garchomp: sv10-232
+# Umbreon ex: sv8pt5-60
 
 def main():
     epd = epd2in13_V4.EPD()
@@ -21,7 +23,7 @@ def main():
 
     while True:
         try:
-            card_info = get_card_info("sv10-232")
+            card_info = get_card_info("sv8pt5-60")
 
             if card_info is None:
                 print("[WARNING] Failed to fetch time from API, retrying in 10 seconds")
